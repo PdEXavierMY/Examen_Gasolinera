@@ -14,7 +14,7 @@ customerIntervalMin = solicitar_introducir_numero("Introduzca el intervalo míni
 customerIntervalMax = solicitar_introducir_numero_extremo_superior("Introduzca el intervalo máximo entre clientes", customerIntervalMin)
 #variable que almacena el intervalo máximo entre clientes
 
-class Barber:
+class Station:
 	refillEvent = Event()#EEvento que controla cuando se echa gasolina
 
 	def sleep(self):

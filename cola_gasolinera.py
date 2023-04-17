@@ -1,25 +1,25 @@
 from threading import Thread
-from barbero import haircutDurationMin, customerIntervalMin, customerIntervalMax, mutex
+from gasolinera import gasDurationMax, customerIntervalMin, customerIntervalMax, mutex
 
-class BarberShop:
-	waitingCustomers = [] #lista de clientes que están esperando
+class gasolinera:
+	waitingCustomers = [] #lista de clientes
 
-	def __init__(self, barber, asientos):
-		self.barber = barber
+	def __init__(self, gasolinera, asientos):
+		self.gasolinera = gasolinera
 		self.asientos = asientos
-		print ('BarberShop iniciado con {} sitios'.format(asientos))
+		print ('Gasolinera iniciada con {} sitios'.format(asientos))
 		print ('Mínimo intervalo de Clientes = {}'.format(customerIntervalMin))
 		print ('Máximo intervalo de Clientes = {}'.format(customerIntervalMax))
-		print ('Tiempo mínimo de corte de pelo = {}'.format(haircutDurationMin))
-		print ('Tiempo máximo de corte de pelo = {}'.format(customerIntervalMax))
+		print ('Tiempo mínimo para repostar = {}'.format(gasDurationMax))
+		print ('Tiempo máximo para repostar = {}'.format(customerIntervalMax))
 		print ('---------------------------------------')
 
-	def openShop(self):
-		print ('La barbería se está abriendo')
-		workingThread = Thread(target = self.barberGoToWork)#declaramos un hilo para que el barbero trabaje
-		workingThread.start()#iniciamos el hilo del barbero
+	def openStation(self):
+		print ('La gasolinera se está abriendo')
+		workingThread = Thread(target = self.customerRefilling)
+		workingThread.start()
 
-	def barberGoToWork(self):
+	def customerRefilling(self):
 		while True:
 			mutex.acquire()#bloqueamos hasta que suceda el release
 
@@ -27,22 +27,22 @@ class BarberShop:
 				c = self.waitingCustomers[0]#cogemos al primer cliente y lo eliminamos de la lista
 				del self.waitingCustomers[0]
 				mutex.release()
-				self.barber.cutHair(c)#hacemos que el barbero le corte el pelo al cliente escogido
+				self.station.refill(c)
 			else:
 				mutex.release()
-				print ('Sin clientes en espera, tomando un descanso...')
-				self.barber.sleep()
-				print ('El barbero se ha despertado')
+				print ('Sin clientes en espera...')
+				self.station.sleep()
+				print ('Procediendo a repostar...')
 
-	def enterBarberShop(self, customer):
+	def enterGasStation(self, customer):
 		mutex.acquire() #bloqueamos hasta que suceda el release
-		print ('>>>>> {} entró en la tienda y está buscando un sitio'.format(customer.name))
+		print ('>>>>> {} llegó a la gasolinera y está buscando un sitio'.format(customer.name))
 
 		if len(self.waitingCustomers) == self.asientos: #si la sala de espera está llena
-			print ('La sala de espera está llena, {} se va a marchar.'.format(customer.name))
+			print ('No hay sitios, {} se marcha.'.format(customer.name))
 			mutex.release()
 		else:
-			print ('{} se ha sentado en la sala de espera'.format(customer.name))
+			print ('{} va a esperar'.format(customer.name))
 			self.waitingCustomers.append(customer) #añadimos al cliente a la lista de clientes en espera
 			mutex.release()
-			self.barber.wakeUp()#Despertamos al barbero
+			self.station.wakeUp()#Despertamos al barbero
