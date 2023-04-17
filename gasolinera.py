@@ -30,3 +30,6 @@ class Station:
 		randomrefilltime = random.randrange(gasDurationMin, gasDurationMax+1)
 		time.sleep(randomrefilltime)
 		print ('{} ha terminado de repostar'.format(customer.name))
+		print ('{} va a pagar'.format(customer.name))
+		time.sleep(3)
+		print ('{} ha pagado'.format(customer.name))
