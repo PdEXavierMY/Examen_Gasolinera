@@ -8,6 +8,7 @@ from introducir import solicitar_introducir_numero
 
 if __name__ == '__main__':
     tiempoT = solicitar_introducir_numero("Introduzca el tiempo que estará abierta la gasolinera")
+    now = time.time() #tiempo actual
 
     customers = [] #lista de clientes
     idcliente = 1
@@ -20,17 +21,15 @@ if __name__ == '__main__':
     gasS = Gasolinera(gas, asientos=1)
     gasS.openStation() #abrimos el thread
 
-    now = time.time() #tiempo actual
-    while now < tiempoT:
+    while (time.time()-now) < tiempoT:
         c = customers.pop()#Cogemos un cliente y lo eliminamos de la lista
         #New customer enters the barbershop
         gasS.enterGasStation(c)#el cliente c entra
         customerInterval = random.randrange(customerIntervalMin,customerIntervalMax+1) #generamos un intervalo aleatorio entre los dos valores
         time.sleep(customerInterval) #esperamos el intervalo de tiempo generado
-        now += time.time() #sumamos el tiempo actual al tiempo que lleva la gasolinera abierta
 
     time.sleep(1)
-    print ('Todos los clientes de hoy han sido atendidos')
+    print ('El tiempo ha terminado, la gasolinera cierra')
     os._exit(0)
 
 
