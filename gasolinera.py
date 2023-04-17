@@ -5,30 +5,29 @@ from introducir import solicitar_introducir_numero, solicitar_introducir_numero_
 mutex = Lock()# para que no se pueda acceder a la barberia mientras se esta cortando el pelo
 
 #variables reutilizables en todo el programa
-haircutDurationMin = solicitar_introducir_numero("Introduzca el tiempo mínimo de corte de pelo")
-#variable que almacena el tiempo mínimo que tardará en cortar el pelo
-haircutDurationMax = solicitar_introducir_numero_extremo_superior("Introduzca el tiempo máximo de corte de pelo", haircutDurationMin)
-#variable que almacena el tiempo máximo que tardará en cortar el pelo
+gasDurationMin = solicitar_introducir_numero("Introduzca el tiempo mínimo para repostar")
+#variable que almacena el tiempo mínimo que tardará en repostar
+gasDurationMax = solicitar_introducir_numero_extremo_superior("Introduzca el tiempo máximo para respostar", gasDurationMin)
+#variable que almacena el tiempo máximo que tardará en repostar
 customerIntervalMin = solicitar_introducir_numero("Introduzca el intervalo mínimo entre clientes")
 #variable que almacena el intervalo mínimo entre clientes
 customerIntervalMax = solicitar_introducir_numero_extremo_superior("Introduzca el intervalo máximo entre clientes", customerIntervalMin)
 #variable que almacena el intervalo máximo entre clientes
 
 class Barber:
-	barberWorkingEvent = Event()#El barbero se crea un evento que es cuando está trabajando
+	refillEvent = Event()#EEvento que controla cuando se echa gasolina
 
 	def sleep(self):
-		self.barberWorkingEvent.wait()#Definimos que si se duerme entonces el evento se para
+		self.refillEvent.wait()#Definimos que si se duerme entonces el evento se para
 
 	def wakeUp(self):
-		self.barberWorkingEvent.set()#Definimos que si se despierta entonces el evento se activa
+		self.refillEvent.set()#Definimos que si se despierta entonces el evento se activa
 
-	def cutHair(self, customer):
-		#Definiendo que el barbero está trabajando
-		self.barberWorkingEvent.clear()#Se limpia el evento
+	def refill(self, customer):
+		self.refillEvent.clear()#Se limpia el evento
 
-		print ('A {} le están cortando el pelo'.format(customer.name))
+		print ('{} está repostando'.format(customer.name))
 
-		randomHairCuttingTime = random.randrange(haircutDurationMin, haircutDurationMax+1)
-		time.sleep(randomHairCuttingTime)#ponemos un tiempo aleatorio que tardará en cortar el pelo
-		print ('{} ha terminado'.format(customer.name))
+		randomrefilltime = random.randrange(gasDurationMin, gasDurationMax+1)
+		time.sleep(randomrefilltime)
+		print ('{} ha terminado de repostar'.format(customer.name))
