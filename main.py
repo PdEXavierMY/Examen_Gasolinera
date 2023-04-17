@@ -3,28 +3,31 @@ import os
 from gasolinera import Station, customerIntervalMin, customerIntervalMax
 from cola_gasolinera import Gasolinera
 from cliente import Customer
-from introducir import solicitar_introducir_numero, solicitar_introducir_palabra
+from introducir import solicitar_introducir_numero
 
 
 if __name__ == '__main__':
-    nclientes = solicitar_introducir_numero("Introduzca el número de clientes que desea introducir")
-    #variable que almacena el número de clientes que se van a introducir
+    tiempoT = solicitar_introducir_numero("Introduzca el tiempo que estará abierta la gasolinera")
 
     customers = [] #lista de clientes
-    for i in range(nclientes): #bucle que introduce los clientes en la lista
-        customers.append(Customer('{}'.format(solicitar_introducir_palabra("Introduzca el nombre del cliente"))))
+    idcliente = 1
+    for i in range(50): #bucle que introduce los clientes en la lista
+        customers.append(Customer('{}'.format(idcliente)))
+        idcliente += 1
 
     gas = Station() #iniciamos la gasolinera
 
     gasS = Gasolinera(gas, asientos=1)
     gasS.openStation() #abrimos el thread
 
-    while len(customers) > 0:
+    now = time.time() #tiempo actual
+    while now < tiempoT:
         c = customers.pop()#Cogemos un cliente y lo eliminamos de la lista
         #New customer enters the barbershop
         gasS.enterGasStation(c)#el cliente c entra
         customerInterval = random.randrange(customerIntervalMin,customerIntervalMax+1) #generamos un intervalo aleatorio entre los dos valores
         time.sleep(customerInterval) #esperamos el intervalo de tiempo generado
+        now += time.time() #sumamos el tiempo actual al tiempo que lleva la gasolinera abierta
 
     time.sleep(1)
     print ('Todos los clientes de hoy han sido atendidos')
