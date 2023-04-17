@@ -1,17 +1,16 @@
 from threading import Event, Lock
 import time, random
-from introducir import solicitar_introducir_numero, solicitar_introducir_numero_extremo_superior
 
 mutex = Lock()# para que no se pueda acceder a la barberia mientras se esta cortando el pelo
 
 #variables reutilizables en todo el programa
-gasDurationMin = solicitar_introducir_numero("Introduzca el tiempo mínimo para repostar")
+gasDurationMin = 5
 #variable que almacena el tiempo mínimo que tardará en repostar
-gasDurationMax = solicitar_introducir_numero_extremo_superior("Introduzca el tiempo máximo para respostar", gasDurationMin)
+gasDurationMax = 10
 #variable que almacena el tiempo máximo que tardará en repostar
-customerIntervalMin = solicitar_introducir_numero("Introduzca el intervalo mínimo entre clientes")
+customerIntervalMin = 8
 #variable que almacena el intervalo mínimo entre clientes
-customerIntervalMax = solicitar_introducir_numero_extremo_superior("Introduzca el intervalo máximo entre clientes", customerIntervalMin)
+customerIntervalMax = 13
 #variable que almacena el intervalo máximo entre clientes
 
 class Station:
