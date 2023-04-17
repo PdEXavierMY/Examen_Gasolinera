@@ -27,11 +27,11 @@ class Gasolinera:
 				c = self.waitingCustomers[0]#cogemos al primer cliente y lo eliminamos de la lista
 				del self.waitingCustomers[0]
 				mutex.release()
-				self.station.refill(c)
+				self.gasolinera.refill(c)
 			else:
 				mutex.release()
 				print ('Sin clientes en espera...')
-				self.station.sleep()
+				self.gasolinera.sleep()
 				print ('Procediendo a repostar...')
 
 	def enterGasStation(self, customer):
@@ -45,4 +45,4 @@ class Gasolinera:
 			print ('{} va a esperar'.format(customer.name))
 			self.waitingCustomers.append(customer) #añadimos al cliente a la lista de clientes en espera
 			mutex.release()
-			self.station.wakeUp()#Despertamos al barbero
+			self.gasolinera.wakeUp()
