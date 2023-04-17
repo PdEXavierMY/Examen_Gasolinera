@@ -1,7 +1,7 @@
 from threading import Thread
 from gasolinera import gasDurationMax, customerIntervalMin, customerIntervalMax, mutex
 
-class gasolinera:
+class Gasolinera:
 	waitingCustomers = [] #lista de clientes
 
 	def __init__(self, gasolinera, asientos):
