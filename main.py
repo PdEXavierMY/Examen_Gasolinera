@@ -3,6 +3,7 @@ import os
 from gasolinera import Station, customerIntervalMin, customerIntervalMax
 from cola_gasolinera import Gasolinera
 from cliente import Customer
+import statistics as stats
 from introducir import solicitar_introducir_numero
 
 
@@ -29,7 +30,8 @@ if __name__ == '__main__':
         time.sleep(customerInterval) #esperamos el intervalo de tiempo generado
 
     time.sleep(1)
-    print ('El tiempo ha terminado, la gasolinera cierra')
+    print ('El tiempo ha terminado, la gasolinera cierra.')
+    print('El tiempo medio que tarda un coche desde que llega a la gasolinera hasta que sale de ella es de: {} minutos'.format(stats.mean(gas.tiempomedio)))
     os._exit(0)
 
 

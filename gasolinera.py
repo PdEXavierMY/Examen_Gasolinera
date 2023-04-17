@@ -15,6 +15,7 @@ customerIntervalMax = 13
 
 class Station:
 	refillEvent = Event()#EEvento que controla cuando se echa gasolina
+	tiempomedio = []#Lista que almacena los tiempos de espera de los clientes
 
 	def sleep(self):
 		self.refillEvent.wait()#Definimos que si se duerme entonces el evento se para
@@ -33,3 +34,4 @@ class Station:
 		print ('{} va a pagar'.format(customer.name))
 		time.sleep(3)
 		print ('{} ha pagado'.format(customer.name))
+		self.tiempomedio.append(randomrefilltime+3)
